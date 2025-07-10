@@ -1,11 +1,11 @@
 // ignore_for_file: avoid_print
 
-import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart' as http;
+import 'package:idkanymorezone/controller/post_controller.dart';
+import 'package:idkanymorezone/models/post.dart';
 
 class PostPage extends StatefulWidget {
   const PostPage({super.key});
@@ -15,7 +15,7 @@ class PostPage extends StatefulWidget {
 }
 
 class _PostPageState extends State<PostPage> {
-  List<dynamic> _data = [];
+  List<Post> _data = [];
 
   @override
   void initState() {
@@ -24,15 +24,13 @@ class _PostPageState extends State<PostPage> {
   }
 
   Future<void> fetchData() async {
-    var url = Uri.parse('http://jsonplaceholder.typicode.com/posts');
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
+    try {
+      final posts = await PostController.fetchPosts();
       setState(() {
-        _data = json.decode(response.body);
+        _data = posts;
       });
-    } else {
-      throw Exception('Failed to fetch');
+    } catch (e) {
+      print('Error loading posts bruh: $e');
     }
   }
 
@@ -164,7 +162,7 @@ class _PostPageState extends State<PostPage> {
                                       children: [
                                         TextButton.icon(
                                           onPressed: () {
-                                            final postId = _data[index]['id'];
+                                            final postId = _data[index].id;
                                             final imageUrl =
                                                 'https://abh.ai/random/400/400?seed=$index';
                                             context.push(
@@ -203,7 +201,7 @@ class _PostPageState extends State<PostPage> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          _data[index]['title'],
+                                          _data[index].title,
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
@@ -214,7 +212,7 @@ class _PostPageState extends State<PostPage> {
                                           ),
                                         ),
                                         Text(
-                                          _data[index]['body'].replaceAll(
+                                          _data[index].body.replaceAll(
                                             '\n',
                                             ' ',
                                           ),

@@ -1,6 +1,6 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:idkanymorezone/controller/post_controller.dart';
+import 'package:idkanymorezone/models/comment.dart';
 
 class PostCommentsPage extends StatefulWidget {
   final int postId;
@@ -12,7 +12,7 @@ class PostCommentsPage extends StatefulWidget {
 }
 
 class _PostCommentsPageState extends State<PostCommentsPage> {
-  List<dynamic> comments = [];
+  List<Comment> comments = [];
   bool isLoading = true;
 
   @override
@@ -22,18 +22,17 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
   }
 
   Future<void> fetchAllComments() async {
-    final url = Uri.parse(
-      'http://jsonplaceholder.typicode.com/posts/${widget.postId}/comments',
-    );
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
+    try {
+      final fetchedComments = await PostController.fetchCommentsByPostId(
+        widget.postId,
+      );
       setState(() {
-        comments = json.decode(response.body);
+        comments = fetchedComments;
         isLoading = false;
       });
-    } else {
-      throw Exception('Failed to load comments');
+    } catch (e) {
+      // ignore: avoid_print
+      print("Error fetching comments: $e");
     }
   }
 
@@ -68,7 +67,7 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        comment['email'],
+                        comment.email,
                         style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -76,7 +75,7 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        comment['body'].toString().replaceAll('\n', ' '),
+                        comment.body.toString().replaceAll('\n', ' '),
                         style: const TextStyle(
                           color: Colors.white70,
                           height: 1.4,

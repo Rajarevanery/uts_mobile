@@ -1,7 +1,8 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart' as http;
+import 'package:idkanymorezone/controller/post_controller.dart';
+import 'package:idkanymorezone/models/comment.dart';
+import 'package:idkanymorezone/models/post.dart';
 
 class PostDetails extends StatefulWidget {
   final int postId;
@@ -14,8 +15,8 @@ class PostDetails extends StatefulWidget {
 }
 
 class _PostDetailsState extends State<PostDetails> {
-  Map<String, dynamic>? post;
-  List<dynamic> comments = [];
+  Post? post;
+  List<Comment> comments = [];
   bool isLoading = true;
   bool isCommentsLoading = false;
   bool showComments = false;
@@ -27,39 +28,32 @@ class _PostDetailsState extends State<PostDetails> {
   }
 
   Future<void> fetchPostById() async {
-    final url = Uri.parse(
-      'http://jsonplaceholder.typicode.com/posts/${widget.postId}',
-    );
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
+    try {
+      final fetchedPost = await PostController.fetchPostById(widget.postId);
       setState(() {
-        post = json.decode(response.body);
+        post = fetchedPost;
         isLoading = false;
       });
-    } else {
-      throw Exception('Failed to load post');
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
     }
   }
 
   Future<void> fetchComments() async {
-    setState(() {
-      isCommentsLoading = true;
-    });
-
-    final url = Uri.parse(
-      'http://jsonplaceholder.typicode.com/posts/${widget.postId}/comments',
-    );
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
+    setState(() => isCommentsLoading = true);
+    try {
+      final fetchedComments = await PostController.fetchCommentsByPostId(
+        widget.postId,
+      );
       setState(() {
-        comments = json.decode(response.body);
+        comments = fetchedComments;
         isCommentsLoading = false;
         showComments = true;
       });
-    } else {
-      throw Exception('Failed to load comments bruhhh');
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
     }
   }
 
@@ -110,7 +104,7 @@ class _PostDetailsState extends State<PostDetails> {
 
                   const SizedBox(height: 16),
                   Text(
-                    post!['title'].toString().replaceAll('\n', ' '),
+                    post!.title.toString().replaceAll('\n', ' '),
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -119,7 +113,7 @@ class _PostDetailsState extends State<PostDetails> {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    post!['body'].toString().replaceAll('\n', ' '),
+                    post!.body.toString().replaceAll('\n', ' '),
                     style: const TextStyle(
                       fontSize: 16,
                       color: Colors.white70,
@@ -164,7 +158,7 @@ class _PostDetailsState extends State<PostDetails> {
                               children: [
                                 const SizedBox(height: 4),
                                 Text(
-                                  comment['email'],
+                                  comment.email,
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontFamily: 'Poppins',
@@ -173,10 +167,7 @@ class _PostDetailsState extends State<PostDetails> {
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
-                                  comment['body'].toString().replaceAll(
-                                    '\n',
-                                    ' ',
-                                  ),
+                                  comment.body.toString().replaceAll('\n', ' '),
                                   style: const TextStyle(
                                     color: Colors.white70,
                                     fontFamily: 'Inter',
