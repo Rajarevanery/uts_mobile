@@ -1,16 +1,21 @@
-# idkanymorezone
+# UTS Mobile
 
-A new Flutter project.
+## Home Page
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/7267cc4f-7750-4b8a-89d8-1f384856480b" width="300" />
+</div>
 
-## Getting Started
+## Details Page Tanpa View Comment
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/7a6f85d2-4901-4ebc-9f22-8fc22342a350" width="300" />
+</div>
 
-This project is a starting point for a Flutter application.
+## Details Page Dengan View Comment (3 Comment)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/981b2552-979f-48d5-840d-65ec0d6d9a40" width="300" />
+</div>
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## View all Comments Page
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/a1659fe4-0911-44da-9413-b4f8e97648ea" width="300" />
+</div>
