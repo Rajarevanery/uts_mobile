@@ -31,7 +31,6 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
         isLoading = false;
       });
     } catch (e) {
-      // ignore: avoid_print
       print("Error fetching comments: $e");
     }
   }
@@ -63,22 +62,40 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
                     color: const Color(0xFF1A1A1C),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Column(
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        comment.email,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                      CircleAvatar(
+                        backgroundColor: Colors.blueGrey,
+                        child: Text(
+                          comment.email.substring(0, 1).toUpperCase(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        comment.body.toString().replaceAll('\n', ' '),
-                        style: const TextStyle(
-                          color: Colors.white70,
-                          height: 1.4,
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              comment.email,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              comment.body.toString().replaceAll('\n', ' '),
+                              style: const TextStyle(
+                                color: Colors.white70,
+                                height: 1.4,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],

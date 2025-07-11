@@ -57,23 +57,14 @@ class _PostPageState extends State<PostPage> {
         // ),
         title: Row(
           children: [
-            Container(
-              alignment: Alignment.center,
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(150),
-                  topRight: Radius.circular(150),
-                  bottomRight: Radius.circular(150),
-                  bottomLeft: Radius.circular(150),
-                ),
-              ),
+            CircleAvatar(
+              backgroundColor: Colors.blueGrey,
               child: Text(
                 "R",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
 

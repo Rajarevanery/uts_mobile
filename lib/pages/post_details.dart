@@ -136,6 +136,8 @@ class _PostDetailsState extends State<PostDetails> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 24),
+
                   if (isCommentsLoading)
                     const Padding(
                       padding: EdgeInsets.only(top: 16),
@@ -147,31 +149,50 @@ class _PostDetailsState extends State<PostDetails> {
                       children: [
                         ...comments.take(3).map((comment) {
                           return Container(
-                            margin: const EdgeInsets.only(top: 16),
+                            margin: const EdgeInsets.only(bottom: 16),
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               color: const Color(0xFF1A1A1C),
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Column(
+                            child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const SizedBox(height: 4),
-                                Text(
-                                  comment.email,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.bold,
+                                CircleAvatar(
+                                  backgroundColor: Colors.blueGrey,
+                                  child: Text(
+                                    comment.email.substring(0, 1).toUpperCase(),
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  comment.body.toString().replaceAll('\n', ' '),
-                                  style: const TextStyle(
-                                    color: Colors.white70,
-                                    fontFamily: 'Inter',
-                                    height: 1.3,
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        comment.email,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        comment.body.toString().replaceAll(
+                                          '\n',
+                                          ' ',
+                                        ),
+                                        style: const TextStyle(
+                                          color: Colors.white70,
+                                          height: 1.4,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
