@@ -2,12 +2,14 @@
 
 ## Home Page
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/7267cc4f-7750-4b8a-89d8-1f384856480b" width="300" />
+  <img width="544" height="976" alt="image" src="https://github.com/user-attachments/assets/039904c3-5ce7-4f72-9320-6336672edfd4" />
+
 </div>
 
 ## Details Page Tanpa View Comment
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/7a6f85d2-4901-4ebc-9f22-8fc22342a350" width="300" />
+  <img width="549" height="979" alt="image" src="https://github.com/user-attachments/assets/b72fce5e-3e01-4a08-b07a-043fddd1e2c8" />
+
 </div>
 
 ## Details Page Dengan View Comment (3 Comment)
